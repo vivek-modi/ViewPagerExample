@@ -44,9 +44,7 @@ dependencies {
 
     implementation "androidx.viewpager2:viewpager2:1.0.0"
 
-    implementation "androidx.paging:paging-runtime-ktx:3.0.0-alpha07"
-
-//    implementation "androidx.paging:paging-runtime-ktx:3.0.0-alpha09"
+    implementation "androidx.paging:paging-runtime-ktx:3.0.0-alpha09"
 
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0"
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.2.0"
