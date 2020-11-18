@@ -1,6 +1,5 @@
 package com.example.viewpagerexample
 
-import android.util.Log
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
@@ -24,15 +23,5 @@ class ViewPagerAdapter : PagingDataAdapter<Date, ViewPagerViewHolder>(diffCallba
             override fun areContentsTheSame(oldItem: Date, newItem: Date): Boolean =
                 oldItem == newItem
         }
-    }
-
-    fun isItemPresent(position: Int): Boolean {
-        var dataPresent = false
-        try {
-            dataPresent = getItem(position) != null
-        } catch (e: Exception) {
-            Log.e("Error we get ", "" + e)
-        }
-        return dataPresent
     }
 }
