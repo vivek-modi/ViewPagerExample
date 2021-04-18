@@ -1,6 +1,7 @@
 package com.example.viewpagerexample
 
 import androidx.paging.PagingSource
+import androidx.paging.PagingState
 import java.io.IOException
 import java.util.*
 
@@ -22,5 +23,9 @@ class ViewPagerPagingSource(
         } catch (exception: IOException) {
             LoadResult.Error(exception)
         }
+    }
+
+    override fun getRefreshKey(state: PagingState<Int, Date>): Int? {
+        return null
     }
 }
