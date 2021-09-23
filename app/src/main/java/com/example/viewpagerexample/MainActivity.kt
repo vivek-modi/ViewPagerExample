@@ -4,30 +4,34 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
-import kotlinx.android.synthetic.main.activity_main.*
+import com.example.viewpagerexample.databinding.ActivityMainBinding
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
+
     private val viewModel by viewModels<ViewPagerViewModel>()
+    private lateinit var binding : ActivityMainBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         val adapter = ViewPagerAdapter()
-        viewpager.adapter = adapter
+        binding.viewpager.adapter = adapter
         lifecycleScope.launch {
             viewModel.dataList.collectLatest {
                 adapter.submitData(it)
             }
         }
 
-        next.setOnClickListener {
-            viewpager.setCurrentItem(viewpager.currentItem.plus(1), true)
+        binding.next.setOnClickListener {
+            binding.viewpager.setCurrentItem(binding.viewpager.currentItem.plus(1), true)
         }
 
-        previous.setOnClickListener {
-            viewpager.setCurrentItem(viewpager.currentItem.minus(1), true)
+        binding.previous.setOnClickListener {
+            binding.viewpager.setCurrentItem(binding.viewpager.currentItem.minus(1), true)
         }
     }
 }
