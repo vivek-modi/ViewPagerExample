@@ -8,13 +8,15 @@ import java.util.*
 
 class ViewPagerViewModel(app: Application) : AndroidViewModel(app) {
 
-    private val dataSource = ViewPagerDataSource(5, currentDate())
+    private val dataSource = ViewPagerDataSource(10, currentDate())
 
     val dataList =
-        Pager(config = PagingConfig(pageSize = 5, enablePlaceholders = true),
-            pagingSourceFactory = {
-                ViewPagerPagingSource(dataSource)
-            }).flow
+        Pager(config = PagingConfig(
+            pageSize = 10,
+            enablePlaceholders = true
+        ), pagingSourceFactory = {
+            ViewPagerPagingSource(dataSource)
+        }).flow
 
     private fun currentDate(): Date {
         val calendar = Calendar.getInstance()

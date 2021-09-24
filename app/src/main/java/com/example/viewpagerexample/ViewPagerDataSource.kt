@@ -8,18 +8,15 @@ class ViewPagerDataSource(
     private val currentDate: Date
 ) {
     fun loadDataSource(pageNumber: Int): List<Date> {
-
         val dates = mutableListOf<Date>()
         val startingDate = startingDate(pageNumber)
         val tempCalendar = Calendar.getInstance()
+        tempCalendar.time = startingDate
+
         Log.e("loadData startingDate", "" + startingDate)
 
-        tempCalendar.time = startingDate
-        val endingDate = endingDate(startingDate)
-
-        Log.e(" loadData endingDate", "" + endingDate)
-
-        while (tempCalendar.time < endingDate) {
+        var index = 0;
+        while (index++ < pageSize) {
             dates.add(tempCalendar.time)
             tempCalendar.add(Calendar.DATE, 1)
         }
@@ -29,15 +26,7 @@ class ViewPagerDataSource(
     private fun startingDate(pageNumber: Int): Date {
         Calendar.getInstance().let {
             it.time = currentDate
-            it.add(Calendar.DATE, pageNumber * pageSize)
-            return it.time
-        }
-    }
-
-    private fun endingDate(startingDate: Date): Date {
-        Calendar.getInstance().let {
-            it.time = startingDate
-            it.add(Calendar.DATE, pageSize)
+            it.add(Calendar.DATE, (pageNumber * pageSize) + pageSize)
             return it.time
         }
     }

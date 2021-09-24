@@ -1,6 +1,7 @@
 package com.example.viewpagerexample
 
 import androidx.paging.PagingSource
+import androidx.paging.PagingState
 import java.io.IOException
 import java.util.*
 
@@ -16,10 +17,16 @@ class ViewPagerPagingSource(
             LoadResult.Page(
                 data = data,
                 prevKey = if (data.isEmpty()) null else position - 1,
-                nextKey = if (data.isEmpty()) null else position + 1
+                nextKey = if (data.isEmpty()) null else position + 1,
+                itemsBefore = LoadResult.Page.COUNT_UNDEFINED,
+                itemsAfter = LoadResult.Page.COUNT_UNDEFINED
             )
         } catch (exception: IOException) {
             LoadResult.Error(exception)
         }
+    }
+
+    override fun getRefreshKey(state: PagingState<Int, Date>): Int? {
+        return null
     }
 }
