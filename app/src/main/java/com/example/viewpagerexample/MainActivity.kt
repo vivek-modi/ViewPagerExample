@@ -19,12 +19,12 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val adapter = ViewPagerAdapter()
-        binding.viewpager.adapter = adapter
         lifecycleScope.launch {
             viewModel.dataList.collectLatest {
                 adapter.submitData(it)
             }
         }
+        binding.viewpager.adapter = adapter
 
         binding.next.setOnClickListener {
             binding.viewpager.setCurrentItem(binding.viewpager.currentItem.plus(1), true)

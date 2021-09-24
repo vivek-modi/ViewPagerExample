@@ -12,12 +12,12 @@ class ViewPagerDataSource(
         val dates = mutableListOf<Date>()
         val startingDate = startingDate(pageNumber)
         val tempCalendar = Calendar.getInstance()
-        Log.e("startingDate", "" + startingDate)
+        Log.e("loadData startingDate", "" + startingDate)
 
         tempCalendar.time = startingDate
         val endingDate = endingDate(startingDate)
 
-        Log.e("endingDate", "" + endingDate)
+        Log.e(" loadData endingDate", "" + endingDate)
 
         while (tempCalendar.time < endingDate) {
             dates.add(tempCalendar.time)
