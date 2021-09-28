@@ -8,11 +8,11 @@ import java.util.*
 
 class ViewPagerViewModel(app: Application) : AndroidViewModel(app) {
 
-    private val dataSource = ViewPagerDataSource(10, currentDate())
+    private val dataSource = ViewPagerDataSource(5, currentDate())
 
     val dataList =
         Pager(config = PagingConfig(
-            pageSize = 10,
+            pageSize = 5,
             enablePlaceholders = true
         ), pagingSourceFactory = {
             ViewPagerPagingSource(dataSource)
