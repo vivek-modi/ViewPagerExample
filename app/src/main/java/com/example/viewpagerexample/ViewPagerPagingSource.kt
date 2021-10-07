@@ -27,6 +27,6 @@ class ViewPagerPagingSource(
     }
 
     override fun getRefreshKey(state: PagingState<Int, Date>): Int? {
-        return null
+        return state.anchorPosition
     }
 }
