@@ -11,11 +11,11 @@ class DataSource(
     fun returnData(pageNumber: Int): List<Date> {
 
         val dateList = mutableListOf<Date>()
-        val startDateForPage = firstDateForPage(pageNumber)
+        val startDateForPage = startDate(pageNumber)
         val tempCalendar = Calendar.getInstance()
 
         tempCalendar.time = startDateForPage
-        val lastDateForPage = lastDateForPage(startDateForPage)
+        val lastDateForPage = endDate(startDateForPage)
 
         while (tempCalendar.time < lastDateForPage) {
             if (limitDate == null ||
@@ -31,7 +31,7 @@ class DataSource(
         return dateList
     }
 
-    private fun firstDateForPage(pageNumber: Int): Date {
+    private fun startDate(pageNumber: Int): Date {
         if (pageNumber == 0) {
             return currentDate
         } else {
@@ -43,7 +43,7 @@ class DataSource(
         }
     }
 
-    private fun lastDateForPage(firstDateForPage: Date): Date {
+    private fun endDate(firstDateForPage: Date): Date {
         Calendar.getInstance().let {
             it.time = firstDateForPage
             it.add(Calendar.DATE, size)
