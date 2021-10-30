@@ -25,6 +25,7 @@ class MainActivity : AppCompatActivity() {
                 adapter.submitData(it)
             }
         }
+        viewModel.printData()
         binding.viewpager.adapter = adapter
 
         binding.next.setOnClickListener {
