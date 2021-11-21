@@ -10,9 +10,9 @@ import java.util.*
 
 class ViewPagerViewModel(app: Application) : AndroidViewModel(app) {
 
-    val format = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+    private val format = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
 
-    private val dataSource = DataSource(size = 5, currentDate(), limitDate())
+    private val dataSource = DataSource(size = 5, limitDate(), limitDate())
 
     val dataList =
         Pager(config = PagingConfig(
