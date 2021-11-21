@@ -7,7 +7,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.viewpager2.widget.ViewPager2.SCROLL_STATE_IDLE
 import com.example.viewpagerexample.databinding.ActivityMainBinding
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
 
