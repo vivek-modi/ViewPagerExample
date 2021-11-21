@@ -20,7 +20,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val adapter = ViewPagerAdapter()
-        lifecycleScope.launch {
+        lifecycleScope.launchWhenCreated {
             viewModel.dataList.collectLatest {
                 adapter.submitData(it)
             }

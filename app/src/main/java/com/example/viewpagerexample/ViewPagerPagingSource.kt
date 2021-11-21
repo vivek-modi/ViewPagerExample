@@ -10,19 +10,24 @@ class ViewPagerPagingSource(
 ) : PagingSource<Int, Date>() {
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Date> {
-        val position = params.key ?: 0
+        val position = params.key ?: 1
 
         return try {
             val data = dataSource.returnData(position)
             LoadResult.Page(
-                data = data,
-                prevKey = if (data.isEmpty()) null else position - 1,
-                nextKey = if (data.isEmpty()) null else position + 1,
-                itemsBefore = LoadResult.Page.COUNT_UNDEFINED,
-                itemsAfter = LoadResult.Page.COUNT_UNDEFINED
+                data = data.result,
+                prevKey = data.prevKey,
+                nextKey = data.nextKey
             )
         } catch (exception: IOException) {
             LoadResult.Error(exception)
+        }
+    }
+
+    override fun getRefreshKey(state: PagingState<Int, Date>): Int? {
+        return state.anchorPosition?.let { anchorPosition ->
+            val anchorPage = state.closestPageToPosition(anchorPosition)
+            anchorPage?.prevKey?.plus(1) ?: anchorPage?.nextKey?.minus(1)
         }
     }
 }
