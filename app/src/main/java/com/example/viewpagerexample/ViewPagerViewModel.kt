@@ -16,24 +16,24 @@ class ViewPagerViewModel(app: Application) : AndroidViewModel(app) {
     private val currentDateLimitDataSource = DataSource(size = 5, limitDate(), limitDate())
 
     // add few days as current date
-    private val fewDaysLimitDataSource = DataSource(size = 5, currentDate(), limitDate())
+//    private val fewDaysLimitDataSource = DataSource(size = 5, currentDate(), limitDate())
 
     val dataList =
         Pager(config = PagingConfig(
             pageSize = 1
         ), pagingSourceFactory = {
-            ViewPagerPagingSource(fewDaysLimitDataSource)
-//            ViewPagerPagingSource(currentDateLimitDataSource)
+//            ViewPagerPagingSource(fewDaysLimitDataSource)
+            ViewPagerPagingSource(currentDateLimitDataSource)
         }).flow
 
     fun printData() {
-//        Log.e("Page -1 ", "" + currentDateLimitDataSource.returnData(-1).result.map(format::format))
-//        Log.e("Page 0 ", "" + currentDateLimitDataSource.returnData(0).result.map(format::format))
-//        Log.e("Page 1 ", "" + currentDateLimitDataSource.returnData(1).result.map(format::format))
+        Log.e("Page -1 ", "" + currentDateLimitDataSource.returnData(-1).result.map(format::format))
+        Log.e("Page 0 ", "" + currentDateLimitDataSource.returnData(0).result.map(format::format))
+        Log.e("Page 1 ", "" + currentDateLimitDataSource.returnData(1).result.map(format::format))
 
-        Log.e("Page -1 ", "" + fewDaysLimitDataSource.returnData(-1).result.map(format::format))
-        Log.e("Page 0 ", "" + fewDaysLimitDataSource.returnData(0).result.map(format::format))
-        Log.e("Page 1 ", "" + fewDaysLimitDataSource.returnData(1).result.map(format::format))
+//        Log.e("Page -1 ", "" + fewDaysLimitDataSource.returnData(-1).result.map(format::format))
+//        Log.e("Page 0 ", "" + fewDaysLimitDataSource.returnData(0).result.map(format::format))
+//        Log.e("Page 1 ", "" + fewDaysLimitDataSource.returnData(1).result.map(format::format))
 
     }
 

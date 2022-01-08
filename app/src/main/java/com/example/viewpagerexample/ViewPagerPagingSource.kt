@@ -10,7 +10,7 @@ class ViewPagerPagingSource(
 ) : PagingSource<Int, Date>() {
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Date> {
-        val position = params.key ?: 1
+        val position = params.key ?: 0
 
         return try {
             val data = dataSource.returnData(position)
