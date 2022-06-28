@@ -35,7 +35,7 @@ class DataSource(
     private fun startDate(pageNumber: Int): Date {
         Calendar.getInstance().let {
             it.time = currentDate
-            it.add(Calendar.DATE, pageNumber * size)
+            it.add(Calendar.DATE, pageNumber * size - size.minus(1))
             return it.time
         }
     }
