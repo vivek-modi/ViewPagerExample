@@ -6,7 +6,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.viewpager2.widget.ViewPager2.SCROLL_STATE_IDLE
 import com.example.viewpagerexample.databinding.ActivityMainBinding
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.distinctUntilChangedBy
 
 class MainActivity : AppCompatActivity() {
 
@@ -21,6 +23,7 @@ class MainActivity : AppCompatActivity() {
         val adapter = ViewPagerAdapter()
         lifecycleScope.launchWhenCreated {
             adapter.loadStateFlow
+                .distinctUntilChangedBy { it.refresh }
                 .collectLatest {
                     val itemList = adapter.snapshot()
                     if (!itemList.isEmpty()) {
@@ -29,7 +32,7 @@ class MainActivity : AppCompatActivity() {
                 }
         }
         lifecycleScope.launchWhenCreated {
-            viewModel.dataList.collectLatest {
+            viewModel.dataList.collect {
                 adapter.submitData(it)
             }
         }
