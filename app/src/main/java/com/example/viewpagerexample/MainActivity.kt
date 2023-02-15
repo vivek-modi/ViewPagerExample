@@ -33,8 +33,7 @@ class MainActivity : AppCompatActivity() {
                 }
         }
         lifecycleScope.launchWhenCreated {
-            val viewPagerRepository = ViewPagerRepository()
-            viewModel.createRepositoryData(viewPagerRepository).collect {
+            viewModel.dataList.collect {
                 adapter.submitData(it)
             }
         }
