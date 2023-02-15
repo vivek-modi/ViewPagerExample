@@ -24,12 +24,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         binding.addNewDate.setOnClickListener {
             viewModel.addNewValue()
-            adapter.addLoadStateListener {
-                val itemList = adapter.snapshot().items
-                if (itemList.isNotEmpty()) {
-                    binding.viewpager.setCurrentItem(4, false)
-                }
-            }
+            adapter.refresh()
         }
 
         lifecycleScope.launchWhenResumed {
