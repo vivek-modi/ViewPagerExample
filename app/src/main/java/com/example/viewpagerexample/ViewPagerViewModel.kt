@@ -9,12 +9,10 @@ import java.util.*
 
 class ViewPagerViewModel(app: Application) : AndroidViewModel(app) {
 
-    // pass current date as limit date
-    private val currentDateLimitDataSource = DataSource(size = 5, limitDate(), limitDate())
-
     // add few days as current date
     private val fewDaysLimitDataSource = DataSource(size = 5, currentDate(), limitDate())
     private val pagingSourceFactory = InvalidatingPagingSourceFactory {
+        val currentDateLimitDataSource = DataSource(size = 5, limitDate(), limitDate())
         ViewPagerPagingSource(currentDateLimitDataSource)
     }
     val dataList: Flow<PagingData<Date>> = Pager(
