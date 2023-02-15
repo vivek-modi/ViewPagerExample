@@ -5,14 +5,16 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.*
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.launch
 import java.util.*
 
 class ViewPagerViewModel(app: Application) : AndroidViewModel(app) {
 
     // add few days as current date
     private val fewDaysLimitDataSource = DataSource(size = 5, currentDate(), limitDate())
+    var limitDate = limitDate()
     private val pagingSourceFactory = InvalidatingPagingSourceFactory {
-        val currentDateLimitDataSource = DataSource(size = 5, limitDate(), limitDate())
+        val currentDateLimitDataSource = DataSource(size = 5, limitDate, limitDate)
         ViewPagerPagingSource(currentDateLimitDataSource)
     }
     val dataList: Flow<PagingData<Date>> = Pager(
@@ -30,5 +32,18 @@ class ViewPagerViewModel(app: Application) : AndroidViewModel(app) {
     private fun limitDate(): Date {
         val calendar = Calendar.getInstance()
         return calendar.time
+    }
+
+    private fun newData(): Date {
+        val calendar = Calendar.getInstance()
+        calendar.add(Calendar.DATE, 1)
+        return calendar.time
+    }
+
+    fun addNewValue() {
+        viewModelScope.launch {
+            limitDate = newData()
+            pagingSourceFactory.invalidate()
+        }
     }
 }

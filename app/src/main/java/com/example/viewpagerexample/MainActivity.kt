@@ -16,15 +16,24 @@ class MainActivity : AppCompatActivity() {
 
     private val viewModel by viewModels<ViewPagerViewModel>()
     private lateinit var binding: ActivityMainBinding
+    private val adapter = ViewPagerAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        binding.addNewDate.setOnClickListener {
+            viewModel.addNewValue()
+            adapter.addLoadStateListener {
+                val itemList = adapter.snapshot().items
+                if (itemList.isNotEmpty()) {
+                    binding.viewpager.setCurrentItem(4, false)
+                }
+            }
+        }
 
-        val adapter = ViewPagerAdapter()
-        lifecycleScope.launchWhenCreated {
-            repeatOnLifecycle(Lifecycle.State.CREATED) {
+        lifecycleScope.launchWhenResumed {
+            repeatOnLifecycle(Lifecycle.State.RESUMED) {
                 adapter.loadStateFlow
                     .distinctUntilChangedBy { it.refresh }
                     .collectLatest {
