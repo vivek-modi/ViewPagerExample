@@ -3,7 +3,9 @@ package com.example.viewpagerexample
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.viewpager2.widget.ViewPager2.SCROLL_STATE_IDLE
 import com.example.viewpagerexample.databinding.ActivityMainBinding
 import kotlinx.coroutines.flow.collect
@@ -22,18 +24,22 @@ class MainActivity : AppCompatActivity() {
 
         val adapter = ViewPagerAdapter()
         lifecycleScope.launchWhenCreated {
-            adapter.loadStateFlow
-                .distinctUntilChangedBy { it.refresh }
-                .collectLatest {
-                    val itemList = adapter.snapshot()
-                    if (!itemList.isEmpty()) {
-                        binding.viewpager.setCurrentItem(4, false)
+            repeatOnLifecycle(Lifecycle.State.CREATED) {
+                adapter.loadStateFlow
+                    .distinctUntilChangedBy { it.refresh }
+                    .collectLatest {
+                        val itemList = adapter.snapshot()
+                        if (!itemList.isEmpty()) {
+                            binding.viewpager.setCurrentItem(4, false)
+                        }
                     }
-                }
+            }
         }
         lifecycleScope.launchWhenCreated {
-            viewModel.dataList.collect {
-                adapter.submitData(it)
+            repeatOnLifecycle(Lifecycle.State.CREATED) {
+                viewModel.dataList.collect {
+                    adapter.submitData(it)
+                }
             }
         }
         binding.viewpager.adapter = adapter
